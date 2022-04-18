@@ -1,9 +1,7 @@
 #include "lv_helper.h"
 #include <WiFi.h>
-#define SDA 4
-#define SCL 5
+#include "Wire.h"
 
-// SDA, SCL, TP_INT, TP_RST are all defined in pin_arduino.h of dpu_esp32 variant
 TAMC_FT62X6 lh_tp = TAMC_FT62X6();
 Adafruit_ST7789 lh_tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
@@ -18,6 +16,7 @@ uint16_t width, height;
 void lh_init(int rotation){
   lh_tp.begin();
   lv_init();
+  Wire.begin(SDA, SCL);
   lh_tft.init(LH_SCREEN_WIDTH, LH_SCREEN_HEIGHT);
   if (rotation == 1 || rotation == 3){
     width = LH_SCREEN_HEIGHT;

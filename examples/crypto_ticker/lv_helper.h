@@ -3,11 +3,19 @@
 #define LV_HELPER_H
 
 #include <lvgl.h>
-#include <TFT_eSPI.h>
 #include "TAMC_FT62X6.h"
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
 
-#define LH_SCREEN_WIDTH  320
-#define LH_SCREEN_HEIGHT 240
+#define TFT_MOSI 11
+#define TFT_SCLK 12
+#define TFT_CS   10
+#define TFT_RST  14
+#define TFT_DC    9
+
+#define LH_SCREEN_WIDTH  240
+#define LH_SCREEN_HEIGHT 320
 
 
 /* Display flushing */

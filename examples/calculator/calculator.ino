@@ -67,7 +67,7 @@ void draw_main() {
   lv_btnmatrix_set_btn_ctrl(keyboard_obj, 7, LV_BTNMATRIX_CTRL_CHECKABLE);
   lv_btnmatrix_set_btn_ctrl(keyboard_obj, 11, LV_BTNMATRIX_CTRL_CHECKABLE);
   lv_btnmatrix_set_btn_ctrl(keyboard_obj, 15, LV_BTNMATRIX_CTRL_CHECKABLE);
-  lv_btnmatrix_set_one_checked(btnm, true);
+  lv_btnmatrix_set_one_checked(keyboard_obj, true);
   lv_obj_align(keyboard_obj, LV_ALIGN_BOTTOM_MID, 0, 0);
   lv_obj_add_event_cb(keyboard_obj, event_handler, LV_EVENT_ALL, NULL);
 }

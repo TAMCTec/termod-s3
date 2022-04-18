@@ -8,17 +8,18 @@
 #include <Adafruit_ST7789.h>
 #include <SPI.h>
 
+#define SDA 4
+#define SCL 5
+
 #define TFT_MOSI 11
 #define TFT_SCLK 12
 #define TFT_CS   10
 #define TFT_RST  14
 #define TFT_DC    9
 
-#define SDA 4
-#define SCL 5
-
 #define LH_SCREEN_WIDTH  240
 #define LH_SCREEN_HEIGHT 320
+
 
 /* Display flushing */
 void lh_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);

@@ -1,8 +1,9 @@
-#include "lv_helper.h"
+ #include "lv_helper.h"
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <Wire.h>
+#include "secret.h"
 
 // Set Display Rotation
 // 0: Portrait, 1: Landscape, 2: Portrait Reverse, 3: Landscape Reverse
