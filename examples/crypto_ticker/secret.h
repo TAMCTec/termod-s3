@@ -1,3 +1,3 @@
 
-#define WIFI_SSID "hehehe"
-#define WIFI_PASSWORD "12345678"
+#define WIFI_SSID "'your_ssid'"
+#define WIFI_PASSWORD "your_password"
