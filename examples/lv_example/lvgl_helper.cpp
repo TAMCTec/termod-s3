@@ -2,23 +2,21 @@
 #include <WiFi.h>
 #include "Wire.h"
 
-// SDA, SCL, TP_INT, TP_RST are all defined in pin_arduino.h of dpu_esp32 variant
-TAMC_FT62X6 lh_tp = TAMC_FT62X6();
-Adafruit_ST7789 lh_tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+TFT_eSPI tft = TFT_eSPI();
+TAMC_FT62X6 tp = TAMC_FT62X6();
 
 static lv_disp_draw_buf_t lh_draw_buf;
 static lv_color_t lh_buf[ LH_SCREEN_WIDTH * 10 ];
 static lv_disp_drv_t lh_disp_drv;
 static lv_indev_drv_t lh_indev_drv;
 
-lv_obj_t *lh_msgbox;
 uint16_t width, height;
 
 void lh_init(int rotation){
   Wire.begin(SDA, SCL);
   lh_tp.begin();
   lv_init();
-  lh_tft.init(LH_SCREEN_WIDTH, LH_SCREEN_HEIGHT);
+  lh_tft.begin();
   if (rotation == 1 || rotation == 3){
     width = LH_SCREEN_HEIGHT;
     height = LH_SCREEN_WIDTH;
@@ -26,7 +24,7 @@ void lh_init(int rotation){
     width = LH_SCREEN_WIDTH;
     height = LH_SCREEN_HEIGHT;
   }
-  lh_tft.setRotation((rotation + 2) % 4);
+  lh_tft.setRotation(rotation);
   lh_tp.setRotation(rotation);
 
   lv_disp_draw_buf_init( &lh_draw_buf, lh_buf, NULL, LH_SCREEN_WIDTH * 10 );
@@ -78,13 +76,9 @@ void lh_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
 
-  uint32_t wh = w*h;
   lh_tft.startWrite();
-  lh_tft.setAddrWindow(area->x1, area->y1, w, h);
-  while (wh--) {
-    lh_tft.writeColor(color_p++->full, 1);
-  }
-  // lh_tft.writePixels((uint16_t*)color_p, wh);
+  lh_tft.setAddrWindow( area->x1, area->y1, w, h );
+  lh_tft.pushColors( ( uint16_t * )&color_p->full, w * h, true );
   lh_tft.endWrite();
 
   lv_disp_flush_ready(disp);

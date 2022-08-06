@@ -1,31 +1,41 @@
-#include <pgmspace.h>  // PROGMEM support header
-
-String VERSION = "v1.0.0-alpha-3";
 
 #define WIFI_TIMEOUT 10 // Second
 
 #define SDA 4
 #define SCL 5
-#define AP_SSID     "Crypto-Ticker"
-#define AP_PASSWORD "cryptoticker"
+
+#define FF20 &FreeSans24pt7b
+#define FF19 &FreeSans18pt7b
+#define FF18 &FreeSans12pt7b
+#define FF17 &FreeSans9pt7b
+#define GFXFF 1
 
 #define LOOP_DELAY        10000 // 100 ms
 #define REFLASH_DELAY     10000 // 10 Second
 #define RETRY_COUNT       10
 
+#define STATUS_BUSY  0
+#define STATUS_IDLE  1
+#define STATUS_ERROR 2
+#define STATUS_DONE  3
+
+uint16_t status_colors[] = {TFT_YELLOW, TFT_WHITE, TFT_RED, TFT_GREEN};
+
 String DOLLOR = "$";
-const char* HOSTNAME = "crypto-ticker";
 
-
-unsigned int COIN_COLORS[COINS_LENGTH] = {
-  0xF443, // bitcoin
-  0x4A4E, // ethereum
-  0xED85, // binance-coin
-  0x241F, // cardano
-  0x4D52, // tether
-  0xC808, // polkadot
-  0xFFDF, // xrp
-  0xF80E, // uniswap
-  0xEF5D, // litecoin
-  0x2A9A, // chainlink
+/*
+ * Coins
+ */
+#define COINS_LENGTH 10
+String COINS[COINS_LENGTH] = {
+  "bitcoin",
+  "ethereum",
+  "binance-coin",
+  "cardano",
+  "tether",
+  "polkadot",
+  "xrp",
+  "uniswap",
+  "litecoin",
+  "chainlink",
 };

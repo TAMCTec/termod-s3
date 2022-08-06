@@ -1,170 +1,307 @@
- #include "lv_helper.h"
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <ArduinoJson.h>
+#include <TFT_eSPI.h>
+#include <TAMC_FT62X6.h>
 #include <Wire.h>
+
+#include <WiFi.h>
+#include <ArduinoJson.h>
+#include <HTTPClient.h>
+#include <stdlib.h>
+
+#include "crypto_ticker.h"
 #include "secret.h"
 
-// Set Display Rotation
-// 0: Portrait, 1: Landscape, 2: Portrait Reverse, 3: Landscape Reverse
-#define DISPLAY_ROTATION 3
+// Instances
+TFT_eSPI tft = TFT_eSPI();
+TAMC_FT62X6 tp = TAMC_FT62X6();
 
-#define REFLASH_DELAY 20 * 1000
-#define COINS_LENGTH 20
-
-lv_obj_t* coinListObj;
-
+// Global variables
 HTTPClient http;
-DynamicJsonDocument coinList(10000);
+DynamicJsonDocument coinData(1024);
+String header;
 
-unsigned long previousMillis = -REFLASH_DELAY; // For Reflash first time
-unsigned long currentMillis = 0;
-int currentCoinIndex = 0;
+bool wifiFailed = false;
 
-void connectWifi(void);
-bool coinGetList();
-void displayDrawList(void);
-void displayUpdateList(void);
+const char* coinId;
+const char* coinSymbol;
+const char* coinPrice;
+const char* coinRank;
+const char* coinChange24Hr;
+
+String symbol = String(coinSymbol);
+double price = 0;
+String rank = String(coinRank);
+double change24HrValue = round(String(coinChange24Hr).toFloat());
+
+int currentCoinId = 0;
+int lastCoinId = -1;
+
+bool displayNeedReflash = false;
+bool dataNeedReflash = false;
+
+// Functions
+void setStatus(int status);
+void touchHandler();
+bool coinGetData(String id);
+void displayDrawMain(void);
+void displayReflashData(void);
+void displayDrawMessage(String msg);
+void displayDrawMessage(String msg1, String msg2);
+bool wifiInit();
 String significentNumber(double f, int num);
+
 
 void setup(void) {
   Serial.begin(115200);
   Serial.println("Crypto Ticker Start!");
   Wire.begin(SDA, SCL);
-  lh_init(DISPLAY_ROTATION);
-  displayDrawList();
+  tft.init();
+  tp.begin();
+  tp.setRotation(ROTATION_NORMAL);
+  tft.setRotation(ROTATION_NORMAL);
+  tft.fillScreen(TFT_BLACK);
 }
 
-bool success;
-
+int lastX = -1;
+int lastY = -1;
+int retryCount = 0;
+unsigned long previousMillis = 0;
+unsigned long currentMillis = 0;
 void loop() {
-  if (WiFi.status() != WL_CONNECTED){
-    connectWifi();
-  }
-  currentMillis = millis();
-  if (currentMillis - previousMillis > REFLASH_DELAY) {
-    Serial.println(currentMillis);
-    previousMillis = currentMillis;
-    success = coinGetList();
-    if (success){
-      displayUpdateList();
+  if (WiFi.status() == WL_CONNECTED){
+    currentMillis = millis();
+    touchHandler();
+    if (currentMillis - previousMillis > REFLASH_DELAY || dataNeedReflash) {
+      bool success = false;
+      setStatus(STATUS_BUSY);
+      for (retryCount=0; retryCount<RETRY_COUNT; retryCount++){
+        if (coinGetData(COINS[currentCoinId])){
+          success = true;
+          break;
+        }
+      }
+      if (!success) {
+        setStatus(STATUS_ERROR);
+        displayDrawMessage("Get Data Error");
+      } else {
+        setStatus(STATUS_DONE);
+        if (displayNeedReflash) {
+          displayDrawMain();
+          displayNeedReflash = false;
+        }
+        displayReflashData();
+      }
+      setStatus(STATUS_IDLE);
+      dataNeedReflash = false;
+    }
+    if (currentMillis - previousMillis > LOOP_DELAY) {
+      previousMillis = currentMillis;
     }
   }
-  lh_handler();
+  else {
+    if (wifiInit()){
+      Serial.println(WiFi.localIP().toString());
+      String msg = String("IP: ") + WiFi.localIP().toString();
+      displayDrawMessage("Connected", msg);
+      delay(2000);
+      displayDrawMain();
+    }
+  }
+}
+
+// Status
+void setStatus(int status) {
+  tft.fillCircle(300, 20, 10, status_colors[status]);
+}
+
+/*
+ * Touch Handler
+ */
+void touchHandler() {
+  int x = 0;
+  int y = 0;
+  tp.read();
+  if (tp.isTouched) {
+    x = tp.points[0].x;
+    y = tp.points[0].y;
+    if (lastX == -1) {
+      if (y > 70 && y < 140) {
+        if (x > 0 && x < 50) {
+          currentCoinId--;
+          if (currentCoinId < 0) {
+            currentCoinId = COINS_LENGTH - 1;
+          }
+          dataNeedReflash = true;
+          displayNeedReflash = true;
+        } else if (x > 270 && x < 320) {
+          currentCoinId++;
+          if (currentCoinId >= COINS_LENGTH) {
+            currentCoinId = 0;
+          }
+          dataNeedReflash = true;
+          displayNeedReflash = true;
+        }
+      }
+      lastX = x;
+      lastY = y;
+    }
+  } else {
+    lastX = -1;
+    lastY = -1;
+  }
 }
 
 /*
  * Display
  */
-void displayDrawList(void) {
-  coinListObj = lv_list_create(lv_scr_act());
-  lv_obj_set_size(coinListObj, 320, 240);
-  lv_obj_set_align(coinListObj, LV_ALIGN_CENTER);
-  lv_obj_set_pos(coinListObj, 0, 0);
+void displayDrawMain(void) {
+  tft.fillScreen(TFT_BLACK);
+  tft.setFreeFont(FF18);
+  tft.setTextDatum(TR_DATUM);
+  tft.setTextColor(TFT_WHITE);
+  tft.drawString("Rank:", 170, 150, GFXFF);
+  tft.drawString("Change 24hr:", 170, 180, 4);
+  tft.fillTriangle(320 - 30, 90, 320 - 30, 120, 320 - 10, 105, TFT_PINK);
+  tft.fillTriangle(      30, 90,       30, 120,       10, 105, TFT_PINK);
   for (int i=0; i<COINS_LENGTH; i++){
-    lv_obj_t* obj = lv_list_add_btn(coinListObj, NULL, "");
-
-    lv_obj_t* nameObj = lv_label_create(obj);
-    lv_obj_add_flag(nameObj, LV_OBJ_FLAG_IGNORE_LAYOUT);
-    lv_obj_set_align(nameObj, LV_ALIGN_LEFT_MID);
-    lv_obj_set_pos(nameObj, 20, 0);
-    lv_group_remove_obj(nameObj);
-    lv_obj_t* priceObj = lv_label_create(obj);
-    lv_obj_add_flag(priceObj, LV_OBJ_FLAG_IGNORE_LAYOUT);
-    lv_obj_set_align(priceObj, LV_ALIGN_LEFT_MID);
-    lv_obj_set_pos(priceObj, 140, 0);
-    lv_group_remove_obj(priceObj);
-    lv_obj_t* change24HrObj = lv_label_create(obj);
-    lv_obj_add_flag(change24HrObj, LV_OBJ_FLAG_IGNORE_LAYOUT);
-    lv_obj_set_align(change24HrObj, LV_ALIGN_LEFT_MID);
-    lv_obj_set_pos(change24HrObj, 230, 0);
-    lv_label_set_recolor(change24HrObj, true);
-    lv_group_remove_obj(change24HrObj);
-    // Placeholder for coin id
-    lv_obj_t* idObj = lv_label_create(obj);
-    lv_obj_add_flag(idObj, LV_OBJ_FLAG_IGNORE_LAYOUT);
-    lv_obj_add_flag(idObj, LV_OBJ_FLAG_HIDDEN);
-    lv_group_remove_obj(idObj);
-  }
-}
-void displayUpdateList(void){
-  String price, change24Hr;
-  for (int i=0; i<COINS_LENGTH; i++){
-    const char* rankStr = coinList["data"][i]["rank"];
-    const char* nameStr = coinList["data"][i]["name"];
-    const char* priceStr = coinList["data"][i]["priceUsd"];
-    const char* change24HrStr = coinList["data"][i]["changePercent24Hr"];
-    const char* idStr = coinList["data"][i]["id"];
-    price = "$" + String(String(priceStr).toFloat(), 2);
-    change24Hr = String(String(change24HrStr).toFloat(), 2) + "%";
-    
-    String color;
-    if (change24Hr.startsWith("-")){
-      color = "#ff3333"; // Red
+    if (i == currentCoinId){
+      tft.fillCircle(60+(i*20), 220, 6, TFT_PINK);
     } else {
-      color = "#33ff33"; // Green
+      tft.fillCircle(60+(i*20), 220, 2, TFT_WHITE);
     }
-    change24Hr = color + " " + change24Hr + "#";
-    Serial.print("rank: ");Serial.println(rankStr);
-    Serial.print("name: ");Serial.println(nameStr);
-    Serial.print("price: ");Serial.println(price.c_str());
-    Serial.print("change24Hr: ");Serial.println(change24Hr.c_str());
-    lv_obj_t* item = lv_obj_get_child(coinListObj, i);
-    lv_label_set_text(lv_obj_get_child(item, 0), rankStr);
-    lv_label_set_text(lv_obj_get_child(item, 1), nameStr);
-    lv_label_set_text(lv_obj_get_child(item, 2), price.c_str());
-    lv_label_set_text(lv_obj_get_child(item, 3), change24Hr.c_str());
-    lv_label_set_text(lv_obj_get_child(item, 4), idStr);
   }
 }
 
-bool coinGetList() {
-  String url = "https://api.coincap.io/v2/assets/?limit=";
-  url += COINS_LENGTH;
-  Serial.print("coinGetList url: ");Serial.println(url.c_str());
-  http.begin(url.c_str()); 
+void displayReflashData(void) {
+  String id = String(coinId);
+
+  String _symbol = String(coinSymbol);
+  double _price = String(coinPrice).toFloat();
+  String _rank = String(coinRank);
+  double _change24HrValue = String(coinChange24Hr).toFloat();
+
+  if (currentCoinId != lastCoinId) {
+    symbol = _symbol;
+    tft.fillRect(0, 0, 200, 50, TFT_BLACK);
+
+    // Symbol
+    tft.setFreeFont(FF19);
+    tft.setTextDatum(TL_DATUM);
+    tft.setTextColor(TFT_WHITE);
+    tft.drawString(symbol, 10, 10, GFXFF);
+
+    lastCoinId = currentCoinId;
+  }
+
+  // Price
+  if (price != _price){
+    if (_change24HrValue < 0){
+      tft.setTextColor(TFT_RED);
+    } else {
+      tft.setTextColor(TFT_GREEN);
+    }
+    price = _price;
+    String priceString = String("$") + significentNumber(price, 5);
+    tft.fillRect(50, 80, 220, 50, TFT_BLACK);
+    tft.setFreeFont(FF20);
+    tft.setTextDatum(MC_DATUM);
+    tft.drawString(priceString, 160, 100, GFXFF);
+  }
+
+  // Rank
+  if (rank != _rank){
+    rank = _rank;
+    tft.fillRect(200, 150, 320, 20, TFT_BLACK);
+    tft.setFreeFont(FF18);
+    tft.setTextDatum(TL_DATUM);
+    tft.setTextColor(TFT_WHITE);
+    tft.drawString(rank, 200, 150, GFXFF);
+  }
+
+  // Change 24 hour
+  if (change24HrValue != _change24HrValue){
+    change24HrValue = _change24HrValue;
+
+    String change24Hr = significentNumber(change24HrValue, 4) + String("%");
+    tft.fillRect(200, 180, 320, 20, TFT_BLACK);
+    tft.setFreeFont(FF18);
+    tft.setTextDatum(TL_DATUM);
+    tft.setTextColor(TFT_WHITE);
+    tft.drawString(change24Hr, 200, 180, 4);
+  }
+}
+
+void displayDrawMessage(String msg) {
+  tft.fillRoundRect(40, 50, 240, 140, 10, TFT_BLACK);
+  tft.drawRoundRect(40, 50, 240, 140, 10, TFT_CYAN);
+  tft.setFreeFont(FF17);
+  tft.setTextDatum(MC_DATUM);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.drawString(msg, 160, 120, GFXFF);
+  displayNeedReflash = true;
+}
+
+void displayDrawMessage(String msg1, String msg2) {
+  tft.fillRoundRect(40, 50, 240, 140, 10, TFT_BLACK);
+  tft.drawRoundRect(40, 50, 240, 140, 10, TFT_CYAN);
+  tft.setFreeFont(FF17);
+  tft.setTextDatum(MC_DATUM);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.drawString(msg1, 160, 110, GFXFF);
+  tft.drawString(msg2, 160, 130, GFXFF);
+  displayNeedReflash = true;
+}
+
+bool coinGetData(String id) {
+  Serial.print("[HTTP] begin...\n");
+  http.begin("https://api.coincap.io/v2/assets/" + id); //HTTP
+
+  Serial.print("[HTTP] GET...\n");
   int httpCode = http.GET();
   if(httpCode > 0) {
+    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
     if(httpCode == HTTP_CODE_OK) {
       String payload = http.getString();
-      deserializeJson(coinList, payload);
+      deserializeJson(coinData, payload);
       Serial.println(payload);
-    } else {
-      String msg = "[HTTP] GET... failed, error: " + http.errorToString(httpCode);
-      Serial.printf(msg.c_str());
-      lh_showMessage("Error", msg.c_str(), 2000);
-      Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-      return false;
+      coinId = coinData["data"]["id"];
+      coinSymbol = coinData["data"]["symbol"];
+      coinPrice = coinData["data"]["priceUsd"];
+      coinRank = coinData["data"]["rank"];
+      coinChange24Hr = coinData["data"]["changePercent24Hr"];
+      http.end();
+      return true;
     }
-  }else {
-    String msg = "[HTTP] GET... failed, error: " + http.errorToString(httpCode);
-    Serial.printf(msg.c_str());
-    lh_showMessage("Error", msg.c_str(), 2000);
+  } else {
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    http.end();
     return false;
   }
-  http.end();
-  return true;
 }
 
-void connectWifi() {
-  lh_showMessage("Connecting to Wi-Fi", WIFI_SSID, 0);
-  delay(1000);
+/*
+ * Wi-Fi 
+ */
+bool wifiInit() {
+  displayDrawMessage("Connecting to", WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-  }
-  const char* ip = WiFi.localIP().toString().c_str();
-  lh_hideMessage();
-  lh_showMessage("Success", ip, 1000);
+
+  return wifiConnecting(WIFI_SSID);
 }
 
-String roundNumber(double f, int num){
-  String result = String(f, num);
-  result = result.substring(0, num+1);
-  if (result.indexOf(".") < 0 || result.indexOf(".") == 5){
-    result = result.substring(0, num);
+bool wifiConnecting(String msg){
+  int WLcount = 0;
+  while (1) {
+    ++WLcount;
+    delay(500);
+    if (WLcount > WIFI_TIMEOUT * 2) {
+      displayDrawMessage("Connection Failed");
+      delay(2000);
+      return false;
+    }
+    if (WiFi.status() == WL_CONNECTED){
+      return true;
+    }
   }
-  return result;
 }
 
 String significentNumber(double f, int num){
