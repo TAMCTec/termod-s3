@@ -1,9 +1,7 @@
 #include "lv_helper.h"
-#include <WiFi.h>
-#include "Wire.h"
 
-TFT_eSPI tft = TFT_eSPI();
-TAMC_FT62X6 tp = TAMC_FT62X6();
+TFT_eSPI lh_tft = TFT_eSPI();
+TAMC_FT62X6 lh_tp = TAMC_FT62X6();
 
 static lv_disp_draw_buf_t lh_draw_buf;
 static lv_color_t lh_buf[ LH_SCREEN_WIDTH * 10 ];
@@ -44,33 +42,7 @@ void lh_init(int rotation){
   lh_indev_drv.read_cb = lh_touchpad_read;
   lv_indev_drv_register( &lh_indev_drv );
 }
-void lh_handler(void) {
-  lv_timer_handler();
-}
 
-void lh_showMessage(const char *title, const char *message, int timeout){
-  Serial.print(title);Serial.print(": ");Serial.println(message);
-  lh_msgbox = lv_msgbox_create(NULL, title, message, {}, false);
-  lv_obj_t *titleObj = lv_msgbox_get_title(lh_msgbox);
-  lv_obj_t *msgObj = lv_msgbox_get_text(lh_msgbox);
-  lv_obj_set_align(lh_msgbox, LV_ALIGN_CENTER);
-  lv_obj_set_align(titleObj, LV_ALIGN_CENTER);
-  lv_obj_set_align(msgObj, LV_ALIGN_CENTER);
-
-  lv_timer_handler();
-  if (timeout > 0){
-    delay(timeout);
-    lh_hideMessage();
-  }
-}
-void lh_hideMessage(){
-  lv_msgbox_close(lh_msgbox);
-  lv_timer_handler();
-}
-static void lh_eventHandler(lv_event_t * event) {
-  lv_event_code_t code = lv_event_get_code(event);
-  lv_obj_t *obj = lv_event_get_current_target(event);
-}
 /* Display flushing */
 void lh_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -88,10 +60,10 @@ void lh_touchpad_read(lv_indev_drv_t * indev_driver, lv_indev_data_t * data) {
   lh_tp.read();
 
   if (!lh_tp.isTouched) {
-    data->state = LV_INDEV_STATE_REL;
+    data->state = LV_INDEV_STATE_RELEASED;
   }
   else{
-    data->state = LV_INDEV_STATE_PR;
+    data->state = LV_INDEV_STATE_PRESSED;
     /*Set the coordinates*/ 
     data->point.x = lh_tp.points[0].x;
     data->point.y = lh_tp.points[0].y;
