@@ -2,5 +2,5 @@
 Reference
 =====================
 
-.. doxygenfile:: pins_arduino.h
-  :project: lvgl
+.. autodoxygenfile:: pins_arduino.h
+  :project: termod_s3

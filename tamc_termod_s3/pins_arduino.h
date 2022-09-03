@@ -105,12 +105,12 @@ float getBatteryCapacity();
 bool getChargingState();
 /**
  * Set on charge start callback
- * @param callback  On charge start Callback function
+ * @param func  On charge start Callback function
  */
 void setOnChargeStart(void (*func)());
 /**
  * Set on charge end callback
- * @param callback  On charge end Callback function
+ * @param func  On charge end Callback function
  */
 void setOnChargeEnd(void (*func)());
 

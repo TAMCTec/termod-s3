@@ -1,7 +1,11 @@
 Simple Drawing APP
 =================================
 
-`Source code <>`_
+`Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/draw>`_
 
-.. include:: ../../../../examples/draw/draw.ino
-    :code: cpp
+.. tabs::
+
+    .. tab:: draw.ino
+
+        .. include:: ../../../../examples/draw/draw.ino
+            :code: cpp

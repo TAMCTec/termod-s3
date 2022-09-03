@@ -13,4 +13,4 @@ Now as you are ready, let's run some examples. You don't need to run all of them
     micro_sdcard
     device_info
     macro_pad
-
+    factory_test

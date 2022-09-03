@@ -1,7 +1,6 @@
 FAQ
 =======================
 
-.. _no-serial-device-found:
 No serial devices found
 --------------------------------
 Here are a few things you can try:

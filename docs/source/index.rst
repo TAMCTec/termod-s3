@@ -6,7 +6,7 @@ Termod S3
 Termod S3 is a ESP32 S3 development board with 2.8 inch capacitive touch diaplay. 
 
 Specifications
--------------
+---------------------------
 
 .. table::
    :widths: 20, 30
@@ -36,5 +36,5 @@ Specifications
 
    hardware
    arduino-usage/index
-   edf-idf-usage/index
+   esp-idf-usage/index
    faq

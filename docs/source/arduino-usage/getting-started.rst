@@ -95,7 +95,7 @@ Comment out the line: ``#include <User_Setup.h>``, and uncomment the line: ``#in
     ...
 
 Install LVGL Library (Optional)
-----------------------------
+-----------------------------------------
 
 `LVGL <https://lvgl.io/>`_ is an amazing GUI library, make it easy to build modern UI.
 
@@ -123,7 +123,7 @@ After install LVGL Library, open File Explorer and go to Arduino library folder.
 
 Open ``lvgl`` folder, and copy ``lv_conf_template.h`` file to Arduino library folder, alongside lvgl folder, not under lvgl. Like this:
 
-.. image:: image/arduino-usage-getting-started-copy-lv-conf-template.png
+.. image:: images/arduino-usage-getting-started-copy-lv-conf-template.png
 
 Then, rename it to ``lv_conf.h``, open it with your favorate editor, and change first non-comment line ``if 0`` to ``if 1``
 

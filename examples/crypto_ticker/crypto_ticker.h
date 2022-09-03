@@ -1,4 +1,3 @@
-
 #define WIFI_TIMEOUT 10 // Second
 
 #define FF20 &FreeSans24pt7b
