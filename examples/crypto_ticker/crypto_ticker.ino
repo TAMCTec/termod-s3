@@ -1,8 +1,8 @@
 #include <TFT_eSPI.h>
 #include <TAMC_FT62X6.h>
-#include <Wire.h>
 
 #include <WiFi.h>
+#include <Wire.h>
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 #include <stdlib.h>
@@ -53,11 +53,11 @@ String significentNumber(double f, int num);
 void setup(void) {
   Serial.begin(115200);
   Serial.println("Crypto Ticker Start!");
-  Wire.begin(SDA, SCL);
+  Wire.begin();
   tft.init();
   tp.begin();
-  tp.setRotation(ROTATION_NORMAL);
-  tft.setRotation(ROTATION_NORMAL);
+  tp.setRotation(DISPLAY_LANDSCAPE);
+  tft.setRotation(DISPLAY_LANDSCAPE);
   tft.fillScreen(TFT_BLACK);
 }
 

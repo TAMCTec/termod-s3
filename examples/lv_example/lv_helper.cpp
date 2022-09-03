@@ -4,28 +4,28 @@ TFT_eSPI lh_tft = TFT_eSPI();
 TAMC_FT62X6 lh_tp = TAMC_FT62X6();
 
 static lv_disp_draw_buf_t lh_draw_buf;
-static lv_color_t lh_buf[ LH_SCREEN_WIDTH * 10 ];
+static lv_color_t lh_buf[ DISPLAY_WIDTH * 10 ];
 static lv_disp_drv_t lh_disp_drv;
 static lv_indev_drv_t lh_indev_drv;
 
 uint16_t width, height;
 
 void lh_init(int rotation){
-  Wire.begin(SDA, SCL);
+  Wire.begin();
   lh_tp.begin();
   lv_init();
   lh_tft.begin();
   if (rotation == 1 || rotation == 3){
-    width = LH_SCREEN_HEIGHT;
-    height = LH_SCREEN_WIDTH;
+    width = DISPLAY_HEIGHT;
+    height = DISPLAY_WIDTH;
   } else {
-    width = LH_SCREEN_WIDTH;
-    height = LH_SCREEN_HEIGHT;
+    width = DISPLAY_WIDTH;
+    height = DISPLAY_HEIGHT;
   }
   lh_tft.setRotation(rotation);
   lh_tp.setRotation(rotation);
 
-  lv_disp_draw_buf_init( &lh_draw_buf, lh_buf, NULL, LH_SCREEN_WIDTH * 10 );
+  lv_disp_draw_buf_init( &lh_draw_buf, lh_buf, NULL, DISPLAY_WIDTH * 10 );
 
   /*Initialize the display*/
   lv_disp_drv_init( &lh_disp_drv );

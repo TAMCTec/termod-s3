@@ -1,9 +1,6 @@
 
 #define WIFI_TIMEOUT 10 // Second
 
-#define SDA 4
-#define SCL 5
-
 #define FF20 &FreeSans24pt7b
 #define FF19 &FreeSans18pt7b
 #define FF18 &FreeSans12pt7b

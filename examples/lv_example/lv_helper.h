@@ -6,12 +6,6 @@
 #include "Wire.h"
 #include <TFT_eSPI.h>
 
-#define SDA 4
-#define SCL 5
-
-#define LH_SCREEN_WIDTH  240
-#define LH_SCREEN_HEIGHT 320
-
 /* Display flushing */
 void lh_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
 /*Read the touchpad*/

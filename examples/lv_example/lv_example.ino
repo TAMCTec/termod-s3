@@ -1,9 +1,5 @@
 #include "lv_helper.h"
 
-// Set Display Rotation
-// 0: Portrait, 1: Landscape, 2: Portrait Reverse, 3: Landscape Reverse
-#define DISPLAY_ROTATION 3
-
 lv_obj_t* arc;
 lv_obj_t* slider;
 lv_obj_t* arcValueLabel;
@@ -185,7 +181,7 @@ void lv_example_switch_1(void) {
   li = lv_obj_create(lv_scr_act());
   lv_obj_clear_flag(li, LV_OBJ_FLAG_SCROLLABLE);
   lv_obj_set_size(li, 310, 50);
-  lv_obj_align(li, LV_ALIGN_TOP_MID, 0, 570);
+  lv_obj_align(li, LV_ALIGN_TOP_MID, 0, 590);
   sw = lv_switch_create(li);
   lv_obj_align(sw, LV_ALIGN_RIGHT_MID, -10, 0);
   lv_obj_add_event_cb(sw, switch_event_handler, LV_EVENT_ALL, NULL);
@@ -196,7 +192,7 @@ void lv_example_switch_1(void) {
   li = lv_obj_create(lv_scr_act());
   lv_obj_clear_flag(li, LV_OBJ_FLAG_SCROLLABLE);
   lv_obj_set_size(li, 310, 50);
-  lv_obj_align(li, LV_ALIGN_TOP_MID, 0, 630);
+  lv_obj_align(li, LV_ALIGN_TOP_MID, 0, 650);
   sw = lv_switch_create(li);
   lv_obj_add_state(sw, LV_STATE_CHECKED);
   lv_obj_align(sw, LV_ALIGN_RIGHT_MID, -10, 0);
@@ -218,7 +214,7 @@ static void switch_event_handler(lv_event_t* e) {
 void lv_example_calendar_1(void) {
   lv_obj_t* calendar = lv_calendar_create(lv_scr_act());
   lv_obj_set_size(calendar, 300, 200);
-  lv_obj_align(calendar, LV_ALIGN_TOP_MID, 0, 690);
+  lv_obj_align(calendar, LV_ALIGN_TOP_MID, 0, 710);
   lv_obj_add_event_cb(calendar, calendar_event_handler, LV_EVENT_ALL, NULL);
 
   lv_calendar_set_today_date(calendar, 2022, 8, 9);
@@ -262,7 +258,7 @@ void lv_example_chart_1(void) {
   lv_obj_t * chart;
   chart = lv_chart_create(lv_scr_act());
   lv_obj_set_size(chart, 200, 150);
-  lv_obj_align(chart, LV_ALIGN_TOP_MID, 0, 900);
+  lv_obj_align(chart, LV_ALIGN_TOP_MID, 0, 920);
   lv_chart_set_type(chart, LV_CHART_TYPE_LINE);   /*Show lines and points too*/
 
   /*Add two data series*/
@@ -298,7 +294,7 @@ void lv_example_chart_1(void) {
 
 void setup() {
   Serial.begin(115200);
-  lh_init(DISPLAY_ROTATION);
+  lh_init(DISPLAY_LANDSCAPE);
   Serial.println("LVGL Example: Ready");
 
   lv_example_arc_1();

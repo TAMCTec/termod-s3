@@ -3,131 +3,185 @@
 Hardware
 ====================================
 
-TODO
+Specifications
+---------------
+
+.. table::
+    :widths: 20, 30
+    :align: left
+  
+    +----------------+-----------------------------+
+    | Power          | USB: 5V; Battery: 3.3V-4.2V |
+    +----------------+-----------------------------+
+    | MCU            | ESP32 S3                    |
+    +----------------+-----------------------------+
+    | Flash          | 8 M                         |
+    +----------------+-----------------------------+
+    | PSRAM          | 2 M                         |
+    +----------------+-----------------------------+
+    | Display        | 2.8 Inch 320x240 IPS        |
+    +----------------+-----------------------------+
+    | Touch          | FT6206 Capacitive IIC       |
+    +----------------+-----------------------------+
+    | Size           | 76x58mm                     |
+    +----------------+-----------------------------+
+    | Mounting Holes | M2 x 4                      |
+    +----------------+-----------------------------+
+
 
 Pin Assignment
 ------------------------------------
 
 General Pins
 
-.. table
+.. table::
     :widths: 20, 30
     :align: left
   
-    +-----------+------------------+
-    | ESP32 S3  | General          |
-    +===========+==================+
-    | GPIO11    | MOSI             |
-    +-----------+------------------+
-    | GPIO13    | MISO             |
-    +-----------+------------------+
-    | GPIO12    | SCLK             |
-    +-----------+------------------+
-    | GPIO4     | SDA              |
-    +-----------+------------------+
-    | GPIO5     | SCL              |
-    +-----------+------------------+
-    | GPIO1     | Battery Level    |
-    +-----------+------------------+
-    | GPIO2     | Charge Detect    |
-    +-----------+------------------+
-    | GPIO0     | Switch           |
-    +-----------+------------------+
-    | GPIO10    | TFT CS           |
-    +-----------+------------------+
-    | GPIO9     | TFT D/C          |
-    +-----------+------------------+
-    | GPIO14    | TFT Reset        |
-    +-----------+------------------+
-    | GPIO48    | TFT Backlight*   |
-    +-----------+------------------+
-    | GPIO21    | uSD CS           |
-    +-----------+------------------+
-    | GPIO47    | uSD Card Detect* |
-    +-----------+------------------+
+    +-----------+-----------------------------------------+
+    | ESP32 S3  | General                                 |
+    +===========+=========================================+
+    | GPIO11    | MOSI                                    |
+    +-----------+-----------------------------------------+
+    | GPIO13    | MISO                                    |
+    +-----------+-----------------------------------------+
+    | GPIO12    | SCLK                                    |
+    +-----------+-----------------------------------------+
+    | GPIO8     | SDA                                     |
+    +-----------+-----------------------------------------+
+    | GPIO9     | SCL                                     |
+    +-----------+-----------------------------------------+
+    | GPIO1     | Battery Level                           |
+    +-----------+-----------------------------------------+
+    | GPIO2     | Charge Detect                           |
+    +-----------+-----------------------------------------+
+    | GPIO0     | Button                                  |
+    +-----------+-----------------------------------------+
+    | GPIO10    | TFT CS                                  |
+    +-----------+-----------------------------------------+
+    | GPIO18    | TFT D/C                                 |
+    +-----------+-----------------------------------------+
+    | GPIO14    | TFT Reset                               |
+    +-----------+-----------------------------------------+
+    | GPIO48    | TFT Backlight (See `Selectable pins`_)  |
+    +-----------+-----------------------------------------+
+    | GPIO21    | uSD CS                                  |
+    +-----------+-----------------------------------------+
+    | GPIO47    | uSD Card Detect (See `Selectable pins`_)|
+    +-----------+-----------------------------------------+
 
 LCD Pins
 
-.. table
+.. table::
     :widths: 20, 30
     :align: left
   
-    +-----------+---------------+
-    | ESP32 S3  | LCD           |
-    +===========+===============+
-    | GPIO11    | MOSI          |
-    +-----------+---------------+
-    | GPIO13    | MISO          |
-    +-----------+---------------+
-    | GPIO12    | SCLK          |
-    +-----------+---------------+
-    | GPIO10    | CS            |
-    +-----------+---------------+
-    | GPIO9     | D/C           |
-    +-----------+---------------+
-    | GPIO14    | Reset         |
-    +-----------+---------------+
-    | GPIO48    | Backlight*    |
-    +-----------+---------------+
+    +-----------+-----------------------------------+
+    | ESP32 S3  | LCD                               |
+    +===========+===================================+
+    | GPIO11    | MOSI                              |
+    +-----------+-----------------------------------+
+    | GPIO13    | MISO                              |
+    +-----------+-----------------------------------+
+    | GPIO12    | SCLK                              |
+    +-----------+-----------------------------------+
+    | GPIO10    | CS                                |
+    +-----------+-----------------------------------+
+    | GPIO18    | D/C                               |
+    +-----------+-----------------------------------+
+    | GPIO14    | Reset                             |
+    +-----------+-----------------------------------+
+    | GPIO48    | Backlight (See `Selectable pins`_)|
+    +-----------+-----------------------------------+
 
 FT6206 Touch Screeen Pins
 
-.. table
+.. table::
     :widths: 20, 30
     :align: left
   
     +-----------+---------------+
     | ESP32 S3  | FT6206        |
     +===========+===============+
-    | GPIO4     | SDA           |
+    | GPIO8     | SDA           |
     +-----------+---------------+
-    | GPIO5     | SCL           |
+    | GPIO9     | SCL           |
+    +-----------+---------------+
+    | NC        | INT           |
+    +-----------+---------------+
+    | NC        | RST           |
     +-----------+---------------+
 
 Micro SD Card Pins
 
-.. table
+.. table::
     :widths: 20, 30
     :align: left
   
-    +-----------+---------------+
-    | ESP32 S3  | Micro SD Card |
-    +===========+===============+
-    | GPIO11    | MOSI          |
-    +-----------+---------------+
-    | GPIO13    | MISO          |
-    +-----------+---------------+
-    | GPIO12    | SCLK          |
-    +-----------+---------------+
-    | GPIO21    | CS            |
-    +-----------+---------------+
-    | GPIO47    | Card Detect*  |
-    +-----------+---------------+
+    +-----------+-------------------------------------+
+    | ESP32 S3  | Micro SD Card                       |
+    +===========+=====================================+
+    | GPIO11    | MOSI                                |
+    +-----------+-------------------------------------+
+    | GPIO13    | MISO                                |
+    +-----------+-------------------------------------+
+    | GPIO12    | SCLK                                |
+    +-----------+-------------------------------------+
+    | GPIO21    | CS                                  |
+    +-----------+-------------------------------------+
+    | GPIO47    | Card Detect (See `Selectable pins`_)|
+    +-----------+-------------------------------------+
 
-> * is optional by solder pad. See ..Solder Pad.
-
-Power management
+Selectable pins
 ----------------
 
-.. image:: images/sense-node-c3-schematic-esp32-c3.png
+JP1 and JP2 are solder pads for selecting functions.
 
-Power includes 2 inputs: 5V USB Type C and 3 AAA batteries, joined together with a simple power selector, which cuts of the batteries when USB is pluged in. A 3.3V power indicator LED(D2) to indicate the power status. A 50:50 voltage divider to devide the battery voltage to IO0.
+.. image:: images/termod-s3-selectable-pins-jp1.png
 
-ESP32 C3
+JP1 is for selecting the micro SD card detect pin. If you need to detect the card insert, you can solder JP1 together, and reads IO47 for card detecting
+
+.. image:: images/termod-s3-selectable-pins-jp2.png
+
+JP2 is for selecting the TFT backlight pin. If you need to control the backlight, you can solder JP2 together, and controls IO48 for backlight control.
+
+Schematic
 ----------------
 
-.. image:: images/sense-node-c3-schematic-esp32-c3.png
+**Power management**
 
-Simple setup for ESP32 C3 with WS2812B(IO8) and buttons(IO9 and EN).
+.. image:: images/termod-s3-schematic-power-management.png
 
-Sensor connectors
-----------------
+Power includes 2 inputs: 5V USB Type C and battery, joined together with a simple power selector,
+which cuts of the batteries when USB is pluged in.
 
-.. image:: images/sense-node-c3-schematic-sensor-connectors.png
+A 3.3V power indicator LED ``D1`` to indicate the power status.
 
-Sensor connectors consist of Proto Area, QWIIC connector and UART flash connector.
+A 100K/200K voltage divider devide the battery voltage to IO1 ``BAT``.
 
-Proto Area
-----------------
+LTC4054 Lithium-ion battery charger is used to charge the battery.
+Charge signal is connected to IO2 ``CHG``.
 
-Proto Area is a small area on the top of the Sense Node C3, like a little bread board. the pin holes are connected as the silk screen printed for easy wiring. DONOT CONNECT THE 3V3 AND GND TOGETHER!
+**ESP32 S3**
+
+.. image:: images/termod-s3-schematic-esp32-s3.png
+
+Simple setup for ESP32 S3 with buttons(``IO0`` and ``EN``).
+
+**Connectors**
+
+.. image:: images/termod-s3-schematic-connectors.png
+
+- J2: GPIO breakout connector.
+- J3: I2C SH-1.0-4P connector compatible with qwIIC and STAMMA-QT
+- J4: Serial connector with ``IO0`` and ``EN`` for easy programming.
+- J8: Micro SD Card connector.
+
+**Display & Touch Panel**
+
+.. image:: images/termod-s3-schematic-display-and-touch-panel.png
+
+- ST7789V display with SPI interface.
+- NMOS transistor ``Q1`` to control the backlight.
+- FT6206 touch panel with I2C interface.
+- 

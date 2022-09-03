@@ -2,9 +2,6 @@
 #include <TAMC_FT62X6.h>
 #include <Wire.h>
 
-#define SDA 4
-#define SCL 5
-
 uint32_t currentColor = 0xF000;
 
 TFT_eSPI tft = TFT_eSPI();
@@ -28,7 +25,7 @@ void drawButtons() {
 }
 
 void setup() {
-  Wire.begin(SDA, SCL);
+  Wire.begin();
   tft.begin();
   tp.begin();
   tp.setRotation(ROTATION_NORMAL);
