@@ -3,6 +3,10 @@
 Hardware
 ====================================
 
+.. image:: ./images/termod-front.png
+
+.. image:: ./images/termod-back.png
+
 Specifications
 ---------------
 
