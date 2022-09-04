@@ -3,9 +3,7 @@
 TFT_eSPI tft = TFT_eSPI();
 
 #define FF20 &FreeSans24pt7b
-#define FF19 &FreeSans18pt7b
 #define FF18 &FreeSans12pt7b
-#define FF17 &FreeSans9pt7b
 
 void setup() {
   Serial.begin(115200);

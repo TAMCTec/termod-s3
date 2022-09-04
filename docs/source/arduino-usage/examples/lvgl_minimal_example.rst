@@ -1,7 +1,10 @@
 LVGL Examples
 =================================
 
-This example shows some of the `LVGL <https://lvgl.io>`_ witgets usage.
+This example shows a basic usage with `LVGL <https://lvgl.io>`_.
+
+In this example, we make a ``lv_helper.cpp`` and ``lv_helper.h`` makes it easy to implement LVGL in Arduino.
+And it is a minimal example for you to start with LVGL
 
 Checkout the `LVGL documentation <https://docs.lvgl.io>`_ for more information.
 
@@ -20,28 +23,7 @@ Open ``termod-s3/examples/lv_example/lv_example.ino`` with Arduino IDE.
 
 Remember to select ``TAMC Termod S3`` and port, then click upload.
 
-In this example, we make a ``lv_helper.cpp`` and ``lv_helper.h`` makes it easy to implement LVGL in Arduino.
-
-
-`Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/lv_example>`_
-
-.. tabs::
-
-    .. tab:: lv_example.ino
-
-        .. include:: ../../../../examples/lv_example/lv_example.ino
-            :code: cpp
-
-    .. tab:: lv_helper.cpp
-
-        .. include:: ../../../../examples/lv_example/lv_helper.cpp
-            :code: cpp
-
-    .. tab:: lv_helper.h
-
-        .. include:: ../../../../examples/lv_example/lv_helper.h
-            :code: cpp
-
+`Source code <https://github.com/TAMCTec/termod-s3/tree/main/lv_minimal_example/lv_minimal_example>`_
 
 .. tabs::
 

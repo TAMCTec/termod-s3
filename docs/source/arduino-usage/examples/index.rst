@@ -9,9 +9,10 @@ Now as you are ready, let's run some examples. You don't need to run all of them
     :maxdepth: 3
 
     draw
-    cripto_ticker
+    crypto_ticker
+    lvgl_minimal_example
     lvgl_example
     micro_sdcard
-    device_info
+    battery_info
     macro_pad
     factory_test

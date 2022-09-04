@@ -310,11 +310,4 @@ void setup() {
 
 void loop() {
   lv_timer_handler();
-  delay(5);
-  // Serial.println("LVGL Example: Loop");
-  // tp.read();
-  // if (tp.isTouched){
-  //   Serial.print("  x: ");Serial.print(tp.points[0].x);
-  //   Serial.print("  y: ");Serial.print(tp.points[0].y);
-  // }
 }

@@ -94,6 +94,8 @@ Comment out the line: ``#include <User_Setup.h>``, and uncomment the line: ``#in
 
     ...
 
+.. _install_lvgl:
+
 Install LVGL Library (Optional)
 -----------------------------------------
 
