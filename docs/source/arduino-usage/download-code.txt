@@ -1,0 +1,9 @@
+Download examples from github :download:`termod-s3 <https://github.com/TAMCTec/termod-s3/archive/refs/heads/main.zip>`
+
+Unzip the downloaded ``termod-s3-main.zip``
+
+Or just clone the repository
+
+.. code-block:: bash
+
+    git clone https://github.com/TAMCTec/termod-s3.git

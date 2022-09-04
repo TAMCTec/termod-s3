@@ -1,6 +1,10 @@
 Crypto Ticker
 =================================
 
+This example have 10 crypto currencies to the display. Cycle through them by pressing the triangle button.
+
+Data from `Coin Cap API <https://docs.coincap.io/>`_
+
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/crypto_ticker>`_
 
 .. tabs::

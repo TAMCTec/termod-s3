@@ -167,5 +167,8 @@ Now everything is ready to build and upload. Make sure **Board** is set to ``TAM
 
 .. image:: images/arduino-usage-getting-started-build-upload-select-board.png
 
+.. include:: download-code.txt
+
+Open the downloaded folder, turn to examples, choose one example, and open it with Arduino IDE. Checkout more on :ref:`arduino-examples`.
 
 .. _Arduino IDE download page: https://www.arduino.cc/en/software
