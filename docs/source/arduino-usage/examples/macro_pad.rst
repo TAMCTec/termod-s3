@@ -16,11 +16,13 @@ We use LVGL to make beautiful UI. Here also uses lv_helper
 
 Open ``termod-s3/examples/macro_pad/macro_pad.ino`` with Arduino IDE.
 
-This example use a 24px font ``LV_FONT_MONTSERRAT_24``, you need to enable it in ``lv_conf.h`` the conf file mentioned in :ref:`install_lvgl`.
+This example use a 22px font ``LV_FONT_MONTSERRAT_22``, you need to enable it in ``lv_conf.h``, the conf file mentioned in :ref:`install_lvgl`.
 
-.. code-block:: c
 
-    #define LV_FONT_MONTSERRAT_24 1
+Open the file, and find the following code, change the 0 to 1 to enable the font.
+.. code-block:: cpp
+
+    #define LV_FONT_MONTSERRAT_22 1
 
 **Make Sure** that **USB Mode** is set to **USB OTG** under **Tools**, and remember to select ``TAMC Termod S3`` and port, then click upload.
 
