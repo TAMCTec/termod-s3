@@ -1,4 +1,4 @@
-LVGL Examples
+LVGL Minimal Examples
 =================================
 
 This example shows a basic usage with `LVGL <https://lvgl.io>`_.

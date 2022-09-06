@@ -178,7 +178,7 @@ Simple setup for ESP32 S3 with buttons(``IO0`` and ``EN``).
 
 .. image:: images/termod-s3-schematic-connectors.png
 
-- J2: GPIO breakout connector.
+- J2: GPIO breakout connector: pin header 2x14 2.54mm.
 - J3: I2C SH-1.0-4P connector compatible with qwIIC and STAMMA-QT
 - J4: Serial connector with ``IO0`` and ``EN`` for easy programming.
 - J8: Micro SD Card connector.
@@ -190,4 +190,11 @@ Simple setup for ESP32 S3 with buttons(``IO0`` and ``EN``).
 - ST7789V display with SPI interface.
 - NMOS transistor ``Q1`` to control the backlight.
 - FT6206 touch panel with I2C interface.
-- 
+
+
+Mechanics
+----------------
+
+- Drawing DXF: :download:`termod-s3-v1.0.0-mechanical-drawing.dxf <mechanics/termod-s3-v1.0.0-mechanical-drawing.dxf>`
+- Drawing PDF: :download:`termod-s3-v1.0.0-mechanical-drawing.pdf <mechanics/termod-s3-v1.0.0-mechanical-drawing.pdf>`
+- 3D Model: :download:`termod-s3-v1.0.0-3d.step <mechanics/termod-s3-v1.0.0-3d.step>`
