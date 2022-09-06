@@ -6,7 +6,7 @@ Tutorial
 
 This example shows how to use Termod S3 as a macro pad.
 
-We use LVGL to make beautiful UI. Here also uses lv_helper
+We use LVGL to make beautiful UI. Here also uses ``lv_helper``
 
 .. note::
 
@@ -18,8 +18,8 @@ Open ``termod-s3/examples/macro_pad/macro_pad.ino`` with Arduino IDE.
 
 This example use a 22px font ``LV_FONT_MONTSERRAT_22``, you need to enable it in ``lv_conf.h``, the conf file mentioned in :ref:`install_lvgl`.
 
-
 Open the file, and find the following code, change the 0 to 1 to enable the font.
+
 .. code-block:: cpp
 
     #define LV_FONT_MONTSERRAT_22 1
@@ -69,7 +69,7 @@ You can see all above in the example for a reference.
 Create a shortcut
 -----------------------
 
-Some Apps have a keyboard shortcut like ``CONSUMER_CONTROL_CALCULATOR``. You can launch it with ``CunsumerControl``. Others you need to create a keyboard shortcut,
+Some Apps have a keyboard shortcut like ``CONSUMER_CONTROL_CALCULATOR``. You can launch it with ``ConsumerControl``. Others you need to create a keyboard shortcut,
 and simulate the shortcut with Termod S3.
 
 For Windows 10 and 11, you can make a keyboard shortcut to a desktop shortcut. First, create a shortcut of a app to desktop. Then, right click the shortcut, click ``Properties``.
@@ -78,19 +78,20 @@ You will see a shortcut options, click on it and press a shortcut key, like ``Ct
 
 Then in code, simulate it like in the example ``openKicad``.
 
-You can change keys. 
-- To control keyboard, use ``Keyboard``, checkout all keys under `USBHIDKeyboard.h <https://github.com/espressif/arduino-esp32/blob/master/libraries/USB/src/USBHIDKeyboard.h>`_
-- To control volume and music, use ``ConsumerControl``, checkout all controls under `USBHIDConsumerControl.h <https://github.com/espressif/arduino-esp32/blob/master/libraries/USB/src/USBHIDConsumerControl.h>`_
-
 .. code-block:: cpp
 
     void openKicad(_lv_event_t* event) {
         Keyboard.press(KEY_LEFT_CTRL);
-        Keyboard.press(KEY_LEFT_GUI);
+        Keyboard.press(KEY_LEFT_ALT);
         Keyboard.press(KEY_LEFT_SHIFT);
         Keyboard.press('1');
         Keyboard.releaseAll();
     }
+
+You can change keys.
+
+- To control keyboard, use ``Keyboard``, checkout all keys under `USBHIDKeyboard.h <https://github.com/espressif/arduino-esp32/blob/master/libraries/USB/src/USBHIDKeyboard.h>`_
+- To control volume and music, use ``ConsumerControl``, checkout all controls under `USBHIDConsumerControl.h <https://github.com/espressif/arduino-esp32/blob/master/libraries/USB/src/USBHIDConsumerControl.h>`_
 
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/macro_pad>`_
 
