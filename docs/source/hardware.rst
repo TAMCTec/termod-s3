@@ -34,6 +34,10 @@ Specifications
    | Mounting Holes | M2 x 4                            |
    +----------------+-----------------------------------+
 
+Pinout
+------------------------------------
+
+.. image:: ./images/termod-s3-pinout.png
 
 Pin Assignment
 ------------------------------------
