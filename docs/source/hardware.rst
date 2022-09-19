@@ -3,16 +3,14 @@
 Hardware
 ====================================
 
-.. image:: ./images/termod-s3-front.png
-
-.. image:: ./images/termod-s3-functions.png
+.. image:: ./images/termod-s3-front-notitle.png
 
 Specifications
 ---------------
 
+.. image:: ./images/termod-s3-functions-notitle.png
+
 .. table::
-    :widths: 20, 30
-    :align: left
 
    +----------------+-----------------------------------+
    | Power          | PH2.0 2P, 3.3V-6V, Min 3.55V@600mA|
@@ -37,7 +35,7 @@ Specifications
 Pinout
 ------------------------------------
 
-.. image:: ./images/termod-s3-pinout.png
+.. image:: ./images/termod-s3-pinout-notitle.png
 
 Pin Assignment
 ------------------------------------
@@ -45,8 +43,6 @@ Pin Assignment
 General Pins
 
 .. table::
-    :widths: 20, 30
-    :align: left
   
     +-----------+-----------------------------------------+
     | ESP32 S3  | General                                 |
@@ -83,8 +79,6 @@ General Pins
 LCD Pins
 
 .. table::
-    :widths: 20, 30
-    :align: left
   
     +-----------+-----------------------------------+
     | ESP32 S3  | LCD                               |
@@ -107,8 +101,6 @@ LCD Pins
 FT6206 Touch Screeen Pins
 
 .. table::
-    :widths: 20, 30
-    :align: left
   
     +-----------+---------------+
     | ESP32 S3  | FT6206        |
@@ -125,8 +117,6 @@ FT6206 Touch Screeen Pins
 Micro SD Card Pins
 
 .. table::
-    :widths: 20, 30
-    :align: left
   
     +-----------+-------------------------------------+
     | ESP32 S3  | Micro SD Card                       |

@@ -1,18 +1,16 @@
 Termod S3
 ====================================
 
-.. image:: ./images/termod-s3-front.png
-
-.. image:: ./images/termod-s3-functions.png
+.. image:: ./images/termod-s3-front-notitle.png
 
 Termod S3 is a ESP32 S3 development board with 2.8 inch capacitive touch diaplay. 
 
 Specifications
 ---------------------------
 
+.. image:: ./images/termod-s3-functions-notitle.png
+
 .. table::
-   :widths: 20, 30
-   :align: left
 
    +----------------+-----------------------------------+
    | Power          | PH2.0 2P, 3.3V-6V, Min 3.55V@600mA|
