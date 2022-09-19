@@ -3,9 +3,9 @@
 Hardware
 ====================================
 
-.. image:: ./images/termod-front.png
+.. image:: ./images/termod-s3-front.png
 
-.. image:: ./images/termod-back.png
+.. image:: ./images/termod-s3-functions.png
 
 Specifications
 ---------------

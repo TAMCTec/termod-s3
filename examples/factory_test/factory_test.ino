@@ -57,6 +57,7 @@ void setup() {
   tft.drawString(sdCardInfo.c_str(), 110, currentY, 1);
   currentY += rowHeight;
   tft.drawString("Button IO0:", 10, currentY, 1);
+  Serial.println("Hello");
 }
 
 void loop() {
@@ -81,6 +82,7 @@ void loop() {
   } else {
     newTouchInfo += "No touch";
   }
+
   // Battery
   float batteryVoltage = getBatteryVoltage();
   float batteryPercentage = getBatteryCapacity();
@@ -95,20 +97,20 @@ void loop() {
   currentY += rowHeight;
   if (newTouchInfo != touchInfo) {
     touchInfo = newTouchInfo;
-    tft.fillRect(110, currentY, 200, rowHeight, TFT_BLACK);
+    tft.fillRect(110, currentY, 210, rowHeight, TFT_BLACK);
     tft.drawString(touchInfo.c_str(), 110, currentY, 1);
   }
   currentY += rowHeight;
   if (newBatteryInfo != batteryInfo) {
     batteryInfo = newBatteryInfo;
-    tft.fillRect(110, currentY, 200, rowHeight, TFT_BLACK);
+    tft.fillRect(110, currentY, 210, rowHeight, TFT_BLACK);
     tft.drawString(batteryInfo.c_str(), 110, currentY, 1);
   }
   currentY += rowHeight;
   currentY += rowHeight;
   if (newButtonInfo != buttonInfo) {
     buttonInfo = newButtonInfo;
-    tft.fillRect(110, currentY, 200, rowHeight, TFT_BLACK);
+    tft.fillRect(110, currentY, 210, rowHeight, TFT_BLACK);
     tft.drawString(buttonInfo.c_str(), 110, currentY, 1);
   }
   delay(10);
