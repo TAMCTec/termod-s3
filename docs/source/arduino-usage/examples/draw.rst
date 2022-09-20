@@ -1,6 +1,8 @@
 Simple Drawing APP
 =================================
 
+.. image:: ./images/termod-s3-example-painter.png
+
 This example is a simple drawing app, with a bar of preset colors, and a slider to change the size of the brush.
 to choose and draw it on the right side of the screen.
 

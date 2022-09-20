@@ -1,6 +1,8 @@
 Crypto Ticker
 =================================
 
+.. image:: ./images/termod-s3-example-cryptoticker.png
+
 This example have 10 crypto currencies to the display. Cycle through them by pressing the triangle button.
 
 Data from `Coin Cap API <https://docs.coincap.io/>`_

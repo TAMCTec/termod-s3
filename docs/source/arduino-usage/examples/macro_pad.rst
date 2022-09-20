@@ -1,6 +1,8 @@
 Macro Pad
 =================================
 
+.. image:: ./images/termod-s3-example-macropad.png
+
 Tutorial
 ------------------------
 
