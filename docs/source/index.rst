@@ -31,10 +31,14 @@ Specifications
    +----------------+-----------------------------------+
    | Mounting Holes | M2 x 4                            |
    +----------------+-----------------------------------+
+   | SD Card        | Micro SD with SPI Interface       |
+   +----------------+-----------------------------------+
+   | Buttons        | IO0 and Reset button              |
+   +----------------+-----------------------------------+
 
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    hardware
    arduino-usage/index

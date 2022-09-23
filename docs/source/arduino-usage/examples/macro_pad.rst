@@ -26,7 +26,7 @@ Open the file, and find the following code, change the 0 to 1 to enable the font
 
     #define LV_FONT_MONTSERRAT_22 1
 
-**Make Sure** that **USB Mode** is set to **USB OTG** under **Tools**, and remember to select ``TAMC Termod S3`` and port, then click upload.
+**Make Sure** that **USB Mode** is set to **USB OTG** under **Tools**, and Remember to select ``ESP32S3 Dev Module`` and port, then click upload.
 
 Make Icons
 ---------------

@@ -16,7 +16,7 @@ With this example, you can learn how to use the touch screen with the display.
 
 Open ``termod-s3/examples/draw/draw.ino`` with Arduino IDE.
 
-Remember to select ``TAMC Termod S3`` and port, then click upload.
+Remember to select ``ESP32S3 Dev Module`` and port, then click upload.
 
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/draw>`_
 

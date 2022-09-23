@@ -19,7 +19,7 @@ As it require internet connection, you need to change the ssid and password to c
 
 .. image:: ./images/crypto_ticker.png
     
-Remember to select ``TAMC Termod S3`` and port, then click upload.
+Remember to select ``ESP32S3 Dev Module`` and port, then click upload.
 
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/crypto_ticker>`_
 

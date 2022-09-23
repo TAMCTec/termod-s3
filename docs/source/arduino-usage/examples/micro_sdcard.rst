@@ -11,7 +11,7 @@ This example is basic usage of micro SD Card, it's copy from ESP32 example SD. O
 
 Open ``termod-s3/examples/sd_example/sd_example.ino`` with Arduino IDE.
 
-Remember to select ``TAMC Termod S3`` and port, then click upload.
+Remember to select ``ESP32S3 Dev Module`` and port, then click upload.
 
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/examples/sd_example>`_
 

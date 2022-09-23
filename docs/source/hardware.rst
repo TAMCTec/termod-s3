@@ -31,6 +31,11 @@ Specifications
    +----------------+-----------------------------------+
    | Mounting Holes | M2 x 4                            |
    +----------------+-----------------------------------+
+   | SD Card        | Micro SD with SPI Interface       |
+   +----------------+-----------------------------------+
+   | Buttons        | IO0 and Reset button              |
+   +----------------+-----------------------------------+
+
 
 Pinout
 ------------------------------------
@@ -139,11 +144,11 @@ JP1 and JP2 are solder pads for selecting functions.
 
 .. image:: images/termod-s3-selectable-pins-jp1.png
 
-JP1 is for selecting the micro SD card detect pin. If you need to detect the card insert, you can solder JP1 together, and reads IO47 for card detecting
+JP1 is for selecting the micro SD card detect pin. If you need to detect inserting a card, you can solder JP1 together, and reads IO47 for card detecting. IO47 will be pulled LOW when a card is inserted.
 
 .. image:: images/termod-s3-selectable-pins-jp2.png
 
-JP2 is for selecting the TFT backlight pin. If you need to control the backlight, you can solder JP2 together, and controls IO48 for backlight control.
+JP2 is for selecting the TFT backlight pin. If you need to control the backlight, you can solder JP2 together, and controls IO48 for backlight control. Set IO48 HIGH to turn on backlight.
 
 Schematic
 ----------------
@@ -157,10 +162,10 @@ which cuts of the batteries when USB is pluged in.
 
 A 3.3V power indicator LED ``D1`` to indicate the power status.
 
-A 100K/200K voltage divider devide the battery voltage to IO1 ``BAT``.
+A 100K/200K voltage divider divide the battery voltage to IO1 ``BAT``.
 
-LTC4054 Lithium-ion battery charger is used to charge the battery.
-Charge signal is connected to IO2 ``CHG``.
+LTC4054 Lithium-ion battery charger.
+Charge signal is connected to IO2 ``CHG``. LOW as charging.
 
 **ESP32 S3**
 
@@ -173,7 +178,7 @@ Simple setup for ESP32 S3 with buttons(``IO0`` and ``EN``).
 .. image:: images/termod-s3-schematic-connectors.png
 
 - J2: GPIO breakout connector: pin header 2x14 2.54mm.
-- J3: I2C SH-1.0-4P connector compatible with qwIIC and STAMMA-QT
+- J3: I2C SH-1.0-4P connector compatible with Qwiic and STEMMA QT
 - J4: Serial connector with ``IO0`` and ``EN`` for easy programming.
 - J8: Micro SD Card connector.
 
@@ -181,14 +186,14 @@ Simple setup for ESP32 S3 with buttons(``IO0`` and ``EN``).
 
 .. image:: images/termod-s3-schematic-display-and-touch-panel.png
 
-- ST7789V display with SPI interface.
-- NMOS transistor ``Q1`` to control the backlight.
-- FT6206 touch panel with I2C interface.
+- J6: ST7789V display with SPI interface.
+- J7: FT6206 touch panel with I2C interface.
+- NMOS ``Q1`` to control the backlight.
 
 
 Mechanics
 ----------------
 
-- Drawing DXF: :download:`termod-s3-v1.0.0-mechanical-drawing.dxf <mechanics/termod-s3-v1.0.0-mechanical-drawing.dxf>`
+- Drawing DXF: :download:`termod-s3-v1.0.0-mechanical-drawing.dxf <mechanics/termod-s3-v1.0.0-mechanical-drawing.DXF>`
 - Drawing PDF: :download:`termod-s3-v1.0.0-mechanical-drawing.pdf <mechanics/termod-s3-v1.0.0-mechanical-drawing.pdf>`
 - 3D Model: :download:`termod-s3-v1.0.0-3d.step <mechanics/termod-s3-v1.0.0-3d.step>`

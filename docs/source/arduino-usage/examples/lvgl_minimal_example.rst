@@ -21,7 +21,7 @@ Checkout the `LVGL documentation <https://docs.lvgl.io>`_ for more information.
 
 Open ``termod-s3/examples/lv_example/lv_example.ino`` with Arduino IDE.
 
-Remember to select ``TAMC Termod S3`` and port, then click upload.
+Remember to select ``ESP32S3 Dev Module`` and port, then click upload.
 
 `Source code <https://github.com/TAMCTec/termod-s3/tree/main/lv_minimal_example/lv_minimal_example>`_
 
