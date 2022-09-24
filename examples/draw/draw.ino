@@ -2,6 +2,11 @@
 #include <TAMC_FT62X6.h>
 #include <Wire.h>
 
+#define DISPLAY_PORTRAIT 2
+#define DISPLAY_LANDSCAPE 3
+#define DISPLAY_PORTRAIT_FLIP 0
+#define DISPLAY_LANDSCAPE_FLIP 1
+
 uint32_t currentColor = 0xF000;
 
 TFT_eSPI tft = TFT_eSPI();
@@ -28,8 +33,8 @@ void setup() {
   Wire.begin();
   tft.begin();
   tp.begin();
-  tp.setRotation(ROTATION_NORMAL);
-  tft.setRotation(ROTATION_NORMAL);
+  tp.setRotation(DISPLAY_LANDSCAPE);
+  tft.setRotation(DISPLAY_LANDSCAPE);
   tft.fillScreen(TFT_WHITE);
   drawButtons();
 }

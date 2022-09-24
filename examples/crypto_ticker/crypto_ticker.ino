@@ -10,6 +10,14 @@
 #include "crypto_ticker.h"
 #include "secret.h"
 
+#define DISPLAY_PORTRAIT 2
+#define DISPLAY_LANDSCAPE 3
+#define DISPLAY_PORTRAIT_FLIP 0
+#define DISPLAY_LANDSCAPE_FLIP 1
+
+#define DISPLAY_WIDTH  240
+#define DISPLAY_HEIGHT 320
+
 // Instances
 TFT_eSPI tft = TFT_eSPI();
 TAMC_FT62X6 tp = TAMC_FT62X6();

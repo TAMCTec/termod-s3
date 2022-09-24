@@ -5,6 +5,11 @@
 #include "SD.h"
 #include "SPI.h"
 
+#define DISPLAY_PORTRAIT 2
+#define DISPLAY_LANDSCAPE 3
+#define DISPLAY_PORTRAIT_FLIP 0
+#define DISPLAY_LANDSCAPE_FLIP 1
+
 TFT_eSPI tft = TFT_eSPI();
 TAMC_FT62X6 tp = TAMC_FT62X6();
 
@@ -23,6 +28,28 @@ String touchInfo;
 String batteryInfo;
 String sdCardInfo;
 String buttonInfo;
+
+static const uint8_t BAT_LV = 1;
+static const uint8_t CHG = 2;
+static const uint8_t SD_CS = 21;
+
+bool getChargingState() {
+  return !digitalRead(CHG);
+}
+
+float getBatteryVoltage() {
+  int analogVolt = analogReadMilliVolts(1);
+  float voltage = analogVolt / 1000.0;
+  voltage = voltage * (100.0 + 200.0) / 200.0;
+  return voltage;
+}
+
+float getBatteryCapacity() {
+  float voltage = getBatteryVoltage();
+  float capacity = (voltage - 3.3) / (4.2 - 3.3) * 100.0;
+  capacity = constrain(capacity, 0, 100);
+  return capacity;
+}
 
 void setup() {
   Serial.begin(115200);
