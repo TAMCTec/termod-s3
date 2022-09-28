@@ -18,7 +18,21 @@ bool getChargingState() {
   return !digitalRead(CHG);
 }
 
+void (*__onChargeStart__)();
+void (*__onChargeEnd__)();
+void setOnChargeStart(void (*func)()) { __onChargeStart__ = func; }
+void setOnChargeEnd(void (*func)()) { __onChargeEnd__ = func; }
+
+void ARDUINO_ISR_ATTR chargeIsr() {
+  if (getChargingState()) {
+    __onChargeStart__();
+  } else {
+    __onChargeEnd__();
+  }
+}
+
 extern "C" void initVariant(void){
   pinMode(CHG, INPUT_PULLUP);
+  attachInterrupt(CHG, chargeIsr, CHANGE);
   analogReadResolution(12);
 }
