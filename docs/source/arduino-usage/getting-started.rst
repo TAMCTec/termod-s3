@@ -71,7 +71,7 @@ After install TFT_eSPI Library, open File Explorer and go to Arduino library fol
 
 Open ``TFT_eSPI`` folder, and open ``User_Setup_Select.h`` file with the editor you like.
 
-Comment out the line: ``#include <User_Setup.h>``, and uncomment the line: ``#include <User_Setups/Setup300_TAMC_Termod_S3.h>``, and the file will look like this:
+Comment out the line: ``#include <User_Setup.h>``, paste a line: ``#include <User_Setups/Setup300_TAMC_Termod_S3.h>`` under it, and the file will look like this:
 
 .. code-block:: cpp
     :linenos:
@@ -80,15 +80,15 @@ Comment out the line: ``#include <User_Setup.h>``, and uncomment the line: ``#in
 
     // #include <User_Setup.h>
 
-    ...
-
     #include <User_Setups/Setup300_TAMC_Termod_S3.h>
 
     ...
 
 Save and close the file. Download Termod S3 setup and copy it to `User_Setups` folder.
 
-:download:`Setup300_TAMC_Termod_S3.h <https://raw.githubusercontent.com/TAMCTec/termod-s3/main/Setup300_TAMC_Termod_S3.h>`
+.. only :: builder_html or readthedocs
+
+    :download:`Setup300_TAMC_Termod_S3.h <https://raw.githubusercontent.com/TAMCTec/termod-s3/main/Setup300_TAMC_Termod_S3.h>`
 
 Done, but no need to close the File Explorer yet, you will need it later.
 
@@ -159,10 +159,12 @@ Then, rename it to ``lv_conf.h``, open it with your favorate editor, and change 
 
 This file contains the configuration options for LVGL. You can find more information about the options in the `Configuration Reference <https://docs.lvgl.io/latest/en/html/overview/configuration.html>`_. And done for LVGL setup.
 
+Now, save the file and close the editor. Also close the File Explorer, if you don't need it anymore.
+
 Build and upload
 ---------------------
 
-Now everything is ready to build and upload. Make sure **Board** is set to ``ESP32S3 Dev Module``.
+Now everything is ready to build and upload. Goback to Arduino IDE. Make sure **Board** is set to ``ESP32S3 Dev Module``.
 
 .. warning:: You may see there's a TAMC Termod S3 board in the list, but it's not ready yet, don't use it as for esp32 core v2.0.5, will fix it in the next version.
 
